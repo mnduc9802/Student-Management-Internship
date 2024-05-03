@@ -1,0 +1,438 @@
+﻿@{
+    int[] conditionCounts = ViewBag.ConditionCounts;
+    int[] avgCounts = ViewBag.AvgCounts;
+    int[] statusCounts = ViewBag.StatusCounts;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>
+        Hệ Thống Quán Lý Sinh Viên Thực Tập
+    </title>
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    <!-- Nucleo Icons -->
+    <link href="~/Content/assets/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="~/Content/assets/css/nucleo-svg.css" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <link href="~/Content/assets/css/nucleo-svg.css" rel="stylesheet" />
+    <!-- CSS Files -->
+    <link id="pagestyle" href="~/Content/assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+    <style>
+        .rectangle {
+            width: 50px;
+            height: 15px;
+            margin-left: 20px;
+            margin-right: 5px;
+            display: inline-block;
+        }
+
+        .red {
+            background-color: red;
+        }
+
+        .blue {
+            background-color: blue;
+        }
+
+        .green {
+            background-color: green;
+        }
+
+        .orange {
+            background-color: orange;
+        }
+
+        .text {
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body class="g-sidenav-show bg-gray-100">
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                <div class="card">
+                    <div class="card-body p-3">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="numbers">
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Sinh viên</p>
+                                    <h5 class="font-weight-bolder">
+                                        @ViewBag.StudentCount
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="col-4 text-end">
+                                <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
+                                    <i class="fas fa-graduation-cap text-lg opacity-10" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                <div class="card">
+                    <div class="card-body p-3">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="numbers">
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Giảng viên</p>
+                                    <h5 class="font-weight-bolder">
+                                        @ViewBag.TeacherCount
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="col-4 text-end">
+                                <div class="icon icon-shape bg-gradient-danger shadow-danger text-center rounded-circle">
+                                    <i class="fas fa-school text-lg opacity-10" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                <div class="card">
+                    <div class="card-body p-3">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="numbers">
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Cán bộ Công ty</p>
+                                    <h5 class="font-weight-bolder">
+                                        @ViewBag.EmployeeCount
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="col-4 text-end">
+                                <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
+                                    <i class="fas fa-building text-lg opacity-10" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6">
+                <div class="card">
+                    <div class="card-body p-3">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="numbers">
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Đề tài</p>
+                                    <h5 class="font-weight-bolder">
+                                        @ViewBag.TopicCount
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="col-4 text-end">
+                                <div class="icon icon-shape bg-gradient-warning shadow-warning text-center rounded-circle">
+                                    <i class="fas fa-book-open text-lg opacity-10" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row mt-4">
+                <div class="col-sm">
+                    <div class="card mb-3">
+                        <div class="card-header pb-0 pt-3 bg-transparent">
+                            <h6 class="text-capitalize">Biểu đồ thống kê điểm GPA</h6>
+                        </div>
+                        <div class="flex-column">
+                            <div class="rectangle red"></div><span class="text">Số điểm A</span>
+                            <div class="rectangle green"></div><span class="text">Số điểm B</span>
+                            <div class="rectangle blue"></div><span class="text">Số điểm C</span>
+                            <div class="rectangle orange"></div><span class="text">Số điểm D</span>
+                            <div class="rectangle"></div><span class="text"></span>
+                        </div>
+                        <div class="card-body p-3">
+                            <div class="chart">
+                                <canvas id="pie-chart-1" class="chart-canvas" height="300"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="card mb-3">
+                        <div class="card-header pb-0 pt-3 bg-transparent">
+                            <h6 class="text-capitalize">Biểu đồ thống kê điểm thực tập</h6>
+                        </div>
+                        <div class="flex-column">
+                            <div class="rectangle red"></div><span class="text">Số điểm Giỏi</span>
+                            <div class="rectangle green"></div><span class="text">Số điểm Khá</span>
+                            <div class="rectangle blue"></div><span class="text">Số điểm Trung Bình</span>
+                            <div class="rectangle orange"></div><span class="text">Số điểm Yếu</span>
+                        </div>
+                        <div class="card-body p-3">
+                            <div class="chart">
+                                <canvas id="pie-chart-2" class="chart-canvas" height="300"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-header pb-0 pt-3 bg-transparent">
+                        <h6 class="text-capitalize">Biểu đồ thống kê sinh viên đi làm</h6>
+                    </div>
+                    <div class="flex-column">
+                        <div class="rectangle green"></div><span class="text">Số sinh viên làm tại doanh nghiệp</span>
+                        <div class="rectangle blue"></div><span class="text">Số sinh viên làm ngoài</span>
+                    </div>
+                    <div class="card-body p-3">
+                        <div class="chart">
+                            <canvas id="pie-chart-3" class="chart-canvas" height="300"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--   Core JS Files   -->
+    <script src="~/Content/assets/js/core/popper.min.js"></script>
+    <script src="~/Content/assets/js/core/bootstrap.min.js"></script>
+    <script src="~/Content/assets/js/plugins/perfect-scrollbar.min.js"></script>
+    <script src="~/Content/assets/js/plugins/smooth-scrollbar.min.js"></script>
+    <script src="~/Content/assets/js/plugins/chartjs.min.js"></script>
+    <script>
+        var ctx4 = document.getElementById("pie-chart-1").getContext("2d");
+        let conditionCounts = @Html.Raw(Json.Encode(conditionCounts));
+        let totalConditionCounts = conditionCounts.reduce((a, b) => a + b, 0);
+        let conditionCountsPercentage = conditionCounts.map(count => ((count / totalConditionCounts) * 100));
+
+        new Chart(ctx4, {
+            type: "pie",
+            data: {
+                labels: ['Số điểm A', 'Số điểm B', 'Số điểm C', 'Số điểm D'],
+                datasets: [{
+                    label: "Projects",
+                    weight: 9,
+                    cutout: 0,
+                    tension: 0.9,
+                    pointRadius: 2,
+                    borderWidth: 2,
+                    backgroundColor: ['red', 'green', 'blue', 'orange'],
+                    data: conditionCountsPercentage,
+                    fill: false
+                }],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                var label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                label += Math.round(context.parsed * 100) / 100 + '%';
+                                return label;
+                            }
+                        }
+                    }
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                },
+                scales: {
+                    y: {
+                        grid: {
+                            drawBorder: false,
+                            display: false,
+                            drawOnChartArea: false,
+                            drawTicks: false,
+                        },
+                        ticks: {
+                            display: false
+                        }
+                    },
+                    x: {
+                        grid: {
+                            drawBorder: false,
+                            display: false,
+                            drawOnChartArea: false,
+                            drawTicks: false,
+                        },
+                        ticks: {
+                            display: false,
+                        }
+                    },
+                },
+            },
+        });
+    </script>
+    <script>
+        var ctx4 = document.getElementById("pie-chart-2").getContext("2d");
+        let avgCounts = @Html.Raw(Json.Encode(avgCounts));
+        let totalavgCounts = avgCounts.reduce((a, b) => a + b, 0);
+        let avgCountsPercentage = avgCounts.map(count => ((count / totalavgCounts) * 100));
+
+        new Chart(ctx4, {
+            type: "pie",
+            data: {
+                labels: ['Số điểm Giỏi', 'Số điểm Khá', 'Số điểm Trung bình', 'Số điểm Yếu'],
+                datasets: [{
+                    label: "Projects",
+                    weight: 9,
+                    cutout: 0,
+                    tension: 0.9,
+                    pointRadius: 2,
+                    borderWidth: 2,
+                    backgroundColor: ['red', 'green', 'blue', 'orange'],
+                    data: avgCountsPercentage,
+                    fill: false
+                }],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                var label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                label += Math.round(context.parsed * 100) / 100 + '%';
+                                return label;
+                            }
+                        }
+                    }
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                },
+                scales: {
+                    y: {
+                        grid: {
+                            drawBorder: false,
+                            display: false,
+                            drawOnChartArea: false,
+                            drawTicks: false,
+                        },
+                        ticks: {
+                            display: false
+                        }
+                    },
+                    x: {
+                        grid: {
+                            drawBorder: false,
+                            display: false,
+                            drawOnChartArea: false,
+                            drawTicks: false,
+                        },
+                        ticks: {
+                            display: false,
+                        }
+                    },
+                },
+            },
+        });
+    </script>
+    <script>
+        var ctx4 = document.getElementById("pie-chart-3").getContext("2d");
+        let statusCounts = @Html.Raw(Json.Encode(statusCounts));
+        let totalstatusCounts = statusCounts.reduce((a, b) => a + b, 0);
+        let statusCountsPercentage = statusCounts.map(count => ((count / totalstatusCounts) * 100));
+
+        new Chart(ctx4, {
+            type: "pie",
+            data: {
+                labels: ['Sinh viên làm tại doanh nghiệp', 'Sinh viên làm ngoài'],
+                datasets: [{
+                    label: "Projects",
+                    weight: 9,
+                    cutout: 0,
+                    tension: 0.9,
+                    pointRadius: 2,
+                    borderWidth: 2,
+                    backgroundColor: ['green', 'blue'],
+                    data: statusCountsPercentage,
+                    fill: false
+                }],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                var label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                label += Math.round(context.parsed * 100) / 100 + '%';
+                                return label;
+                            }
+                        }
+                    }
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                },
+                scales: {
+                    y: {
+                        grid: {
+                            drawBorder: false,
+                            display: false,
+                            drawOnChartArea: false,
+                            drawTicks: false,
+                        },
+                        ticks: {
+                            display: false
+                        }
+                    },
+                    x: {
+                        grid: {
+                            drawBorder: false,
+                            display: false,
+                            drawOnChartArea: false,
+                            drawTicks: false,
+                        },
+                        ticks: {
+                            display: false,
+                        }
+                    },
+                },
+            },
+        });
+    </script>
+    <script src="~/Content/assets/js/core/popper.min.js"></script>
+    <script src="~/Content/assets/js/core/bootstrap.min.js"></script>
+    <script src="~/Content/assets/js/plugins/perfect-scrollbar.min.js"></script>
+    <script src="~/Content/assets/js/plugins/smooth-scrollbar.min.js"></script>
+    <script src="~/Content/assets/js/plugins/chartjs.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Github buttons -->
+    <script src="~/Content/assets/js/DeleteRecord.js"></script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="~/Content/assets/js/argon-dashboard.min.js?v=2.0.4"></script>
+</body>
+
+</html>

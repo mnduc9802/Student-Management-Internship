@@ -1,0 +1,411 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cổng thông tin Sinh viên thực tập</title>
+    <link rel="shortcut icon" href="~/Areas/User/AConfig/images/favicon.png" />
+    <link rel="stylesheet" href="~/assets/loginnews04/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/assets/loginnews04/css/style.css">
+    <script src="~/assets/loginnews04/js/jquery-3.6.3.min.js"></script>
+    <script src="~/assets/loginnews04/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+    <div class="wrapper">
+
+        <header class="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-xs-12">
+                        <a href="/Home/Index"><img src="http://media.uneti.edu.vn/Media/2_SVUNETI/FolderFunc/202305/Images/logo-20230202100753-e-20230511035750-e.png" alt="logo"></a>
+                        <p style="color: #fff; font-size: 24px; padding-left: 85px; margin-top: -15px" >KHOA CÔNG NGHỆ THÔNG TIN</p>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                        <div class="w-right">
+                            <div class="search">
+                                
+                            </div>
+                            <div class="">
+                                <div class="login" style="margin-top: 35px">
+                                    <a href="@Url.Action("Login", "Login")" class="btn btn-submit">Đăng nhập</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                function SubmitFormSearch() {
+                    var form = document.getElementById("nologin-search");
+                    form.submit();
+                }
+            </script>
+        </header>
+
+
+        <div id="menu">
+            <div class="navigation">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div class="navbar-collapse collapse" id="myNavbar" aria-expanded="false">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#">Thông báo</a>
+                                <ul class="child-menu dropdown-menu">
+                                    <li>
+                                        <a href="#" title="">Đại học</a>
+                                        <ul class="child-menu dropdown-menu">
+                                            <li>
+                                                <a href="#" title="">Kế hoạch</a>
+
+                                            </li>
+                                            <li>
+                                                <a href="#" title="">Tin tức</a>
+
+                                            </li>
+                                        </ul>
+
+                                    </li>
+                                    <li>
+                                        <a href="#" title="">Đ&#224;o tạo từ xa</a>
+                                        <ul class="child-menu dropdown-menu">
+                                            <li>
+                                                <a href="#" title="">Kế hoạch</a>
+
+                                            </li>
+                                            <li>
+                                                <a href="#" title="">Tin tức</a>
+
+                                            </li>
+                                        </ul>
+
+                                    </li>
+                                </ul>
+
+                            </li>
+                            <li class="dropdown">
+                                <a href="#">Quy định</a>
+                                <ul class="child-menu dropdown-menu">
+                                    <li>
+                                        <a href="#" title="">Đại học</a>
+
+                                    </li>
+                                    <li>
+                                        <a href="#" title="">Đ&#224;o tạo từ xa</a>
+
+                                    </li>
+                                </ul>
+
+                            </li>
+                            <li class="dropdown">
+                                <a href="#">Chương trình đào tạo</a>
+
+                            </li>
+                            <li class="dropdown">
+                                <a href="#">Sổ tay sinh viên</a>
+
+                            </li>
+                            <li class="dropdown">
+                                <a href="#">Tuyển sinh</a>
+
+                            </li>
+                            <li class="dropdown">
+                                <a href="#">Tra cứu văn bằng</a>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <main class="main">
+
+
+            <section class="slideshow">
+                <img class="slide" src="~/assets/loginnews04/img/z5315467656088_b3f66791995c8a03545f1e9cc8b64791.jpg" alt="">
+                <img class="slide" src="~/assets/loginnews04/img/z5315467668404_7795438f63d4063b3a9906024ab52a1d.jpg" alt="">
+                <script>
+                    var indexValue = 0;
+
+                    function slideShow() {
+                        setTimeout(slideShow, 2500);
+                        var x;
+                        const img = document.getElementsByClassName("slide");
+                        for (x = 0; x < img.length; x++) {
+                            img[x].style.display = "none";
+                        }
+                        indexValue++;
+                        if (indexValue > img.length) {
+                            indexValue = 1
+                        }
+                        img[indexValue - 1].style.display = "block";
+                    }
+                    slideShow();
+                </script>
+            </section>
+            <div class="warpper">
+
+
+
+
+                <div class="nav-tab-home">
+                    <div class="container">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item active">
+                                <a class="nav-link" data-toggle="tab" href="#tab-1" role="tab" aria-selected="true">Đ&#192;O TẠO ĐẠI HỌC</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tab-2" role="tab" aria-selected="false">Đ&#192;O TẠO THỰC TẬP</a>
+                            </li>
+                           
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="tab-content tab-content-home">
+                    <div class="tab-pane fade active in" id="tab-1" role="tabpanel">
+                        <div class="container">
+                            <div class="row">
+
+                                <div class="">
+                                    <div class="col-md-6 col-xs-12">
+                                        <a href="#">
+                                            <h3>KẾ HOẠCH Đ&#192;O TẠO ĐẠI HỌC CH&#205;NH QUY</h3>
+                                        </a>
+                                        <div class="content">
+                                            <div class="item">
+                                                <div class="item-content item-left date">
+                                                    <p class="month">Tháng 02</p>
+                                                    <p class="date">27</p>
+                                                </div>
+                                                <div class="item-content item-right">
+                                                    <a href="#" title="">
+                                                        <p class="title">
+                                                            Th&#244;ng b&#225;o v/v tổ chức lớp Kỹ năng mềm học kỳ 2 năm học 2023-2024
+                                                        </p>
+                                                    </a>
+                                                    <p class="datetime">10h 27.02.2024</p>
+                                                </div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="item-content item-left date">
+                                                    <p class="month">Tháng 02</p>
+                                                    <p class="date">20</p>
+                                                </div>
+                                                <div class="item-content item-right">
+                                                    <a href="#" title="">
+                                                        <p class="title">
+                                                            Th&#244;ng b&#225;o v/v tổ chức c&#225;c lớp học lại, học cải thiện học kỳ II năm học 2023-2024
+                                                        </p>
+                                                    </a>
+                                                    <p class="datetime">16h 20.02.2024</p>
+                                                </div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="item-content item-left date">
+                                                    <p class="month">Tháng 02</p>
+                                                    <p class="date">05</p>
+                                                </div>
+                                                <div class="item-content item-right">
+                                                    <a href="#" title="">
+                                                        <p class="title">
+                                                            Thống b&#225;o kế hoạch x&#233;t tốt nghiệp đợt th&#225;ng 3/2024
+                                                        </p>
+                                                    </a>
+                                                    <p class="datetime">13h 05.02.2024</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12">
+                                        <a href="#">
+                                            <h3>TIN TỨC Đ&#192;O TẠO ĐẠI HỌC CH&#205;NH QUY</h3>
+                                        </a>
+                                        <div class="content">
+                                            <div class="item">
+                                                <div class="item-content item-left date">
+                                                    <p class="month">Tháng 03</p>
+                                                    <p class="date">28</p>
+                                                </div>
+                                                <div class="item-content item-right">
+                                                    <a href="#" title="">
+                                                        <p class="title">
+                                                            Th&#244;ng b&#225;o thi Chuẩn đầu ra tiếng Anh d&#224;nh cho ng&#224;nh Ng&#244;n ngữ Anh K14
+                                                        </p>
+                                                    </a>
+                                                    <p class="datetime">11h 28.03.2024</p>
+                                                </div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="item-content item-left date">
+                                                    <p class="month">Tháng 03</p>
+                                                    <p class="date">22</p>
+                                                </div>
+                                                <div class="item-content item-right">
+                                                    <a href="#" title="">
+                                                        <p class="title">
+                                                            DANH S&#193;CH DỰ THI CẤP CHỨNG CHỈ ỨNG DỤNG CNTT CƠ BẢN ĐỢT 1 NĂM 2024, KỲ THI CHIỀU NG&#192;Y 24 TH&#193;NG 03 NĂM 2024, TẠI CƠ SỞ LĨNH NAM, H&#192; NỘI
+                                                        </p>
+                                                    </a>
+                                                    <p class="datetime">10h 22.03.2024</p>
+                                                </div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="item-content item-left date">
+                                                    <p class="month">Tháng 03</p>
+                                                    <p class="date">22</p>
+                                                </div>
+                                                <div class="item-content item-right">
+                                                    <a href="#" title="">
+                                                        <p class="title">
+                                                            DANH S&#193;CH DỰ THI TIN HỌC MOS, KỲ THI S&#193;NG NG&#192;Y 24 TH&#193;NG 03 NĂM 2024, TẠI CƠ SỞ LĨNH NAM, H&#192; NỘI
+                                                        </p>
+                                                    </a>
+                                                    <p class="datetime">10h 22.03.2024</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab-2" role="tabpanel">
+                        <div class="container">
+                            <div class="row">
+
+                                <div class="">
+                                    <div class="col-md-6 col-xs-12">
+                                        <a href="#">
+                                            <h3>TIN TỨC Đ&#192;O TẠO THỰC TẬP</h3>
+                                        </a>
+                                        <div class="content">
+                                            <div class="item">
+                                                <div class="item-content item-left date">
+                                                    <p class="month">Tháng 01</p>
+                                                    <p class="date">09</p>
+                                                </div>
+                                                <div class="item-content item-right">
+                                                    <a href="#" title="">
+                                                        <p class="title">
+                                                            Th&#244;ng b&#225;o Kế hoạch thực tập dành cho học viên khóa 14
+                                                        </p>
+                                                    </a>
+                                                    <p class="datetime">12h 09.01.2024</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab-3" role="tabpanel">
+                        <div class="container">
+                            <div class="row">
+
+                                <div class="">
+                                    <div class="col-md-6 col-xs-12">
+                                        <a href="#">
+                                            <h3>KẾ HOẠCH Đ&#192;O TẠO TỪ XA</h3>
+                                        </a>
+                                        <div class="content">
+                                            <div class="item">
+                                                <div class="item-content item-left date">
+                                                    <p class="month">Tháng 03</p>
+                                                    <p class="date">28</p>
+                                                </div>
+                                                <div class="item-content item-right">
+                                                    <a href="#" title="">
+                                                        <p class="title">
+                                                            Th&#244;ng b&#225;o tổ chức thi hệ đ&#224;o tạo từ xa HK1 năm học 23-24 đối với K17A4
+                                                        </p>
+                                                    </a>
+                                                    <p class="datetime">11h 28.03.2024</p>
+                                                </div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="item-content item-left date">
+                                                    <p class="month">Tháng 09</p>
+                                                    <p class="date">19</p>
+                                                </div>
+                                                <div class="item-content item-right">
+                                                    <a href="#" title="">
+                                                        <p class="title">
+                                                            Th&#244;ng b&#225;o v/v tồ chức thi kết th&#250;c học phần đối với hệ đ&#224;o tạo từ xa cho SV K16A1 (học kỳ III), K17A1 (học kỳ II), K17A2 (học kỳ I) năm học 2022-2023.
+                                                        </p>
+                                                    </a>
+                                                    <p class="datetime">08h 19.09.2023</p>
+                                                </div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="item-content item-left date">
+                                                    <p class="month">Tháng 05</p>
+                                                    <p class="date">22</p>
+                                                </div>
+                                                <div class="item-content item-right">
+                                                    <a href="#" title="">
+                                                        <p class="title">
+                                                            Th&#244;ng b&#225;o số 367/TB-ĐHKTKTCN, ng&#224;y 19/5/2023 v/v tổ chức thi kết th&#250;c học phần đối với hệ đ&#224;o tạo từ xa cho SV K16 (HKII), K17 (HKI) năm học 2022-2023
+                                                        </p>
+                                                    </a>
+                                                    <p class="datetime">10h 22.05.2023</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="text">
+                <p style="text-align: center;">
+                    <span style="font-size:20px;"><strong>Trường Đại học Kinh tế - Kỹ thuật C&ocirc;ng nghiệp</strong></span><br />
+                    <span style="font-size:14px;">
+                        Địa chỉ: 353 Trần Hưng Đạo, TP.Nam Định<br />
+                        456 Minh Khai, Hai B&agrave; Trưng, H&agrave; Nội<br />
+                        Ng&otilde; 218 Lĩnh Nam, Ho&agrave;ng Mai, H&agrave; Nội
+                    </span>
+                </p>
+
+            </div>
+        </div>
+
+
+    </footer>
+</body>
+
+</html>
+
+
+

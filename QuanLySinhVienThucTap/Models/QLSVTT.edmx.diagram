@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="bf74101dca5c4c45bfd92a4a6fbc98c6" Name="Diagram1">
+        <EntityTypeShape EntityType="QLSVTTModel.Account" Width="1.5" PointX="5" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLSVTTModel.Employee" Width="1.5" PointX="0.75" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLSVTTModel.Internship" Width="1.5" PointX="3" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLSVTTModel.Role" Width="1.5" PointX="2.75" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLSVTTModel.Score" Width="1.5" PointX="8.25" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLSVTTModel.Student" Width="1.5" PointX="0.75" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLSVTTModel.Teacher" Width="1.5" PointX="0.75" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLSVTTModel.Topic" Width="1.5" PointX="6" PointY="3" IsExpanded="true" />
+        <AssociationConnector Association="QLSVTTModel.FK_Account_Roles" ManuallyRouted="false" />
+        <AssociationConnector Association="QLSVTTModel.FK_Internship_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="QLSVTTModel.FK_Topic_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="QLSVTTModel.FK__ThucTap__MaGiaoV__5441852A" ManuallyRouted="false" />
+        <AssociationConnector Association="QLSVTTModel.FK__ThucTap__MaSV__52593CB8" ManuallyRouted="false" />
+        <AssociationConnector Association="QLSVTTModel.FK__Diem__MaDeTai__59FA5E80" ManuallyRouted="false" />
+        <AssociationConnector Association="QLSVTTModel.FK__DeTai__MaSV__571DF1D5" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,596 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="QLSVTTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="AccountID" />
+          </Key>
+          <Property Name="AccountID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar(max)" />
+          <Property Name="RoleID" Type="int" />
+          <Property Name="Status" Type="bit" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="30" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="11" />
+          <Property Name="Address" Type="nvarchar" MaxLength="50" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CompanyAddress" Type="nvarchar(max)" />
+          <Property Name="Note" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Internship">
+          <Key>
+            <PropertyRef Name="InternShipID" />
+          </Key>
+          <Property Name="InternShipID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentID" Type="int" />
+          <Property Name="EmployeeID" Type="int" />
+          <Property Name="TeacherID" Type="int" />
+          <Property Name="Start_Day" Type="date" />
+          <Property Name="End_Day" Type="date" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="IDRole" />
+          </Key>
+          <Property Name="IDRole" Type="int" Nullable="false" />
+          <Property Name="Role" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Score">
+          <Key>
+            <PropertyRef Name="ScoreID" />
+          </Key>
+          <Property Name="ScoreID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Score1" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Score2" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Score3" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Score4" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Score5" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Assessment" Type="nvarchar(max)" />
+          <Property Name="TopicID" Type="int" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="StudentID" />
+          </Key>
+          <Property Name="StudentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="10" />
+          <Property Name="DateOfBirth" Type="date" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="11" />
+          <Property Name="Classroom" Type="nvarchar" MaxLength="30" />
+          <Property Name="GPAScore" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="LetterScore" Type="nvarchar" MaxLength="5" />
+          <Property Name="Address" Type="nvarchar" MaxLength="100" />
+          <Property Name="Status" Type="bit" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="TeacherID" />
+          </Key>
+          <Property Name="TeacherID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar" MaxLength="100" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="10" />
+          <Property Name="DateOfBirth" Type="date" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="11" />
+          <Property Name="Office" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Topic">
+          <Key>
+            <PropertyRef Name="TopicID" />
+          </Key>
+          <Property Name="TopicID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="StudentID" Type="int" />
+          <Property Name="EmployeeID" Type="int" />
+        </EntityType>
+        <Association Name="FK__DeTai__MaSV__571DF1D5">
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="Topic" Type="Self.Topic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="Topic">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Diem__MaDeTai__59FA5E80">
+          <End Role="Topic" Type="Self.Topic" Multiplicity="0..1" />
+          <End Role="Score" Type="Self.Score" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Topic">
+              <PropertyRef Name="TopicID" />
+            </Principal>
+            <Dependent Role="Score">
+              <PropertyRef Name="TopicID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ThucTap__MaGiaoV__5441852A">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="0..1" />
+          <End Role="Internship" Type="Self.Internship" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="TeacherID" />
+            </Principal>
+            <Dependent Role="Internship">
+              <PropertyRef Name="TeacherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ThucTap__MaSV__52593CB8">
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="Internship" Type="Self.Internship" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="Internship">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Account_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="IDRole" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Internship_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Internship" Type="Self.Internship" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Internship">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Topic_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Topic" Type="Self.Topic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Topic">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QLSVTTModelStoreContainer">
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Internship" EntityType="Self.Internship" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Score" EntityType="Self.Score" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Topic" EntityType="Self.Topic" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__DeTai__MaSV__571DF1D5" Association="Self.FK__DeTai__MaSV__571DF1D5">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Topic" EntitySet="Topic" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Diem__MaDeTai__59FA5E80" Association="Self.FK__Diem__MaDeTai__59FA5E80">
+            <End Role="Topic" EntitySet="Topic" />
+            <End Role="Score" EntitySet="Score" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ThucTap__MaGiaoV__5441852A" Association="Self.FK__ThucTap__MaGiaoV__5441852A">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="Internship" EntitySet="Internship" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ThucTap__MaSV__52593CB8" Association="Self.FK__ThucTap__MaSV__52593CB8">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Internship" EntitySet="Internship" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Account_Roles" Association="Self.FK_Account_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Internship_Employee" Association="Self.FK_Internship_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Internship" EntitySet="Internship" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Topic_Employee" Association="Self.FK_Topic_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Topic" EntitySet="Topic" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="QLSVTTModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="AccountID" />
+          </Key>
+          <Property Name="AccountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RoleID" Type="Int32" />
+          <Property Name="Status" Type="Boolean" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_Account_Roles" FromRole="Account" ToRole="Roles" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Internships" Relationship="Self.FK_Internship_Employee" FromRole="Employee" ToRole="Internship" />
+          <NavigationProperty Name="Topics" Relationship="Self.FK_Topic_Employee" FromRole="Employee" ToRole="Topic" />
+        </EntityType>
+        <EntityType Name="Internship">
+          <Key>
+            <PropertyRef Name="InternShipID" />
+          </Key>
+          <Property Name="InternShipID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentID" Type="Int32" />
+          <Property Name="EmployeeID" Type="Int32" />
+          <Property Name="TeacherID" Type="Int32" />
+          <Property Name="Start_Day" Type="DateTime" Precision="0" />
+          <Property Name="End_Day" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Internship_Employee" FromRole="Internship" ToRole="Employee" />
+          <NavigationProperty Name="Teacher" Relationship="Self.FK__ThucTap__MaGiaoV__5441852A" FromRole="Internship" ToRole="Teacher" />
+          <NavigationProperty Name="Student" Relationship="Self.FK__ThucTap__MaSV__52593CB8" FromRole="Internship" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="IDRole" />
+          </Key>
+          <Property Name="IDRole" Type="Int32" Nullable="false" />
+          <Property Name="Role1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Accounts" Relationship="Self.FK_Account_Roles" FromRole="Roles" ToRole="Account" />
+        </EntityType>
+        <EntityType Name="Score">
+          <Key>
+            <PropertyRef Name="ScoreID" />
+          </Key>
+          <Property Name="ScoreID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Score1" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Score2" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Score3" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Score4" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Score5" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Assessment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TopicID" Type="Int32" />
+          <NavigationProperty Name="Topic" Relationship="Self.FK__Diem__MaDeTai__59FA5E80" FromRole="Score" ToRole="Topic" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="StudentID" />
+          </Key>
+          <Property Name="StudentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="Classroom" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="GPAScore" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="LetterScore" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Boolean" />
+          <NavigationProperty Name="Internships" Relationship="Self.FK__ThucTap__MaSV__52593CB8" FromRole="Student" ToRole="Internship" />
+          <NavigationProperty Name="Topics" Relationship="Self.FK__DeTai__MaSV__571DF1D5" FromRole="Student" ToRole="Topic" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="TeacherID" />
+          </Key>
+          <Property Name="TeacherID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="Office" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Internships" Relationship="Self.FK__ThucTap__MaGiaoV__5441852A" FromRole="Teacher" ToRole="Internship" />
+        </EntityType>
+        <EntityType Name="Topic">
+          <Key>
+            <PropertyRef Name="TopicID" />
+          </Key>
+          <Property Name="TopicID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StudentID" Type="Int32" />
+          <Property Name="EmployeeID" Type="Int32" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Topic_Employee" FromRole="Topic" ToRole="Employee" />
+          <NavigationProperty Name="Scores" Relationship="Self.FK__Diem__MaDeTai__59FA5E80" FromRole="Topic" ToRole="Score" />
+          <NavigationProperty Name="Student" Relationship="Self.FK__DeTai__MaSV__571DF1D5" FromRole="Topic" ToRole="Student" />
+        </EntityType>
+        <Association Name="FK_Account_Roles">
+          <End Role="Roles" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="IDRole" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Internship_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Internship" Type="Self.Internship" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Internship">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Topic_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Topic" Type="Self.Topic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Topic">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ThucTap__MaGiaoV__5441852A">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="0..1" />
+          <End Role="Internship" Type="Self.Internship" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="TeacherID" />
+            </Principal>
+            <Dependent Role="Internship">
+              <PropertyRef Name="TeacherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ThucTap__MaSV__52593CB8">
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="Internship" Type="Self.Internship" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="Internship">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Diem__MaDeTai__59FA5E80">
+          <End Role="Topic" Type="Self.Topic" Multiplicity="0..1" />
+          <End Role="Score" Type="Self.Score" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Topic">
+              <PropertyRef Name="TopicID" />
+            </Principal>
+            <Dependent Role="Score">
+              <PropertyRef Name="TopicID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DeTai__MaSV__571DF1D5">
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="Topic" Type="Self.Topic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="Topic">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QLSVTTEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="Self.Account" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="Internships" EntityType="Self.Internship" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Scores" EntityType="Self.Score" />
+          <EntitySet Name="Students" EntityType="Self.Student" />
+          <EntitySet Name="Teachers" EntityType="Self.Teacher" />
+          <EntitySet Name="Topics" EntityType="Self.Topic" />
+          <AssociationSet Name="FK_Account_Roles" Association="Self.FK_Account_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Account" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Internship_Employee" Association="Self.FK_Internship_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Internship" EntitySet="Internships" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Topic_Employee" Association="Self.FK_Topic_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Topic" EntitySet="Topics" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ThucTap__MaGiaoV__5441852A" Association="Self.FK__ThucTap__MaGiaoV__5441852A">
+            <End Role="Teacher" EntitySet="Teachers" />
+            <End Role="Internship" EntitySet="Internships" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ThucTap__MaSV__52593CB8" Association="Self.FK__ThucTap__MaSV__52593CB8">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="Internship" EntitySet="Internships" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Diem__MaDeTai__59FA5E80" Association="Self.FK__Diem__MaDeTai__59FA5E80">
+            <End Role="Topic" EntitySet="Topics" />
+            <End Role="Score" EntitySet="Scores" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DeTai__MaSV__571DF1D5" Association="Self.FK__DeTai__MaSV__571DF1D5">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="Topic" EntitySet="Topics" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="QLSVTTModelStoreContainer" CdmEntityContainer="QLSVTTEntities">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="QLSVTTModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="QLSVTTModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="CompanyAddress" ColumnName="CompanyAddress" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Internships">
+            <EntityTypeMapping TypeName="QLSVTTModel.Internship">
+              <MappingFragment StoreEntitySet="Internship">
+                <ScalarProperty Name="InternShipID" ColumnName="InternShipID" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
+                <ScalarProperty Name="Start_Day" ColumnName="Start_Day" />
+                <ScalarProperty Name="End_Day" ColumnName="End_Day" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="QLSVTTModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="IDRole" ColumnName="IDRole" />
+                <ScalarProperty Name="Role1" ColumnName="Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Scores">
+            <EntityTypeMapping TypeName="QLSVTTModel.Score">
+              <MappingFragment StoreEntitySet="Score">
+                <ScalarProperty Name="ScoreID" ColumnName="ScoreID" />
+                <ScalarProperty Name="Score1" ColumnName="Score1" />
+                <ScalarProperty Name="Score2" ColumnName="Score2" />
+                <ScalarProperty Name="Score3" ColumnName="Score3" />
+                <ScalarProperty Name="Score4" ColumnName="Score4" />
+                <ScalarProperty Name="Score5" ColumnName="Score5" />
+                <ScalarProperty Name="Assessment" ColumnName="Assessment" />
+                <ScalarProperty Name="TopicID" ColumnName="TopicID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="QLSVTTModel.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="StudentCode" ColumnName="StudentCode" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Classroom" ColumnName="Classroom" />
+                <ScalarProperty Name="GPAScore" ColumnName="GPAScore" />
+                <ScalarProperty Name="LetterScore" ColumnName="LetterScore" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teachers">
+            <EntityTypeMapping TypeName="QLSVTTModel.Teacher">
+              <MappingFragment StoreEntitySet="Teacher">
+                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Office" ColumnName="Office" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Topics">
+            <EntityTypeMapping TypeName="QLSVTTModel.Topic">
+              <MappingFragment StoreEntitySet="Topic">
+                <ScalarProperty Name="TopicID" ColumnName="TopicID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

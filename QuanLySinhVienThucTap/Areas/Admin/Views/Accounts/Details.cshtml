@@ -1,0 +1,72 @@
+﻿@model QuanLySinhVienThucTap.Models.Account
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-frame mb-4">
+                <div class="card-header">
+                    <h5 class="card-title text-center">Thông tin tài khoản</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <label class="form-control-label">Tên tài khoản:</label>
+                                @Html.DisplayFor(model => model.Username)
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Mật khẩu:</label>
+                                @Html.DisplayFor(model => model.Password)
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Quyền:</label>
+                                @{
+                                    string roleName = "";
+                                    switch (Model.RoleID)
+                                    {
+                                        case 1:
+                                            roleName = "Admin";
+                                            break;
+                                        case 2:
+                                            roleName = "Teacher";
+                                            break;
+                                        case 3:
+                                            roleName = "Employee";
+                                            break;
+                                        case 4:
+                                            roleName = "Student";
+                                            break;
+                                        default:
+                                            roleName = "Unknown";
+                                            break;
+                                    }
+                                }
+                                <span class="form-control">@roleName</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-control-label">Trạng thái:</label>
+                                @{
+                                    string statusText = Model.Status.HasValue ? (Model.Status.Value ? "Hoạt động" : "Không hoạt động") : "Không xác định";
+                                }
+                                <span class="form-control">@statusText</span>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <a href="@Url.Action("Edit", "Accounts", new { id = Model.AccountID })" class="btn btn-icon btn-3 btn-dark">
+                                <span class="btn-inner--icon"><i class="fas fa-pencil-alt"></i>&nbsp;&nbsp;Sửa</span>
+                            </a>
+                            <a href="@Url.Action("Index", "Accounts")" class="btn btn-icon btn-3 btn-danger">
+                                <span class="btn-inner--icon"><i class="fas fa-times"></i>&nbsp;&nbsp;Trở về</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

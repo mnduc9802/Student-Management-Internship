@@ -1,0 +1,74 @@
+﻿@model QuanLySinhVienThucTap.Models.Topic
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-frame mb-4">
+                    <div class="card-header">
+                        <h5 class="card-title text-center">Thêm đề tài mới</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm">
+                                <div class="form-group">
+                                    <label for="title" class="form-control-label">Tên đề tài</label>
+                                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="description" class="form-control-label">Mô tả</label>
+                                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm">
+                                <div class="form-group">
+                                    <label for="studentid" class="form-control-label">Mã Sinh viên</label>
+                                    @Html.DropDownList("StudentID", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.StudentID, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="employeeid" class="form-control-label">Mã Cán bộ hướng dẫn</label>
+                                    @Html.DropDownList("EmployeeID", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.EmployeeID, "", new { @class = "text-danger" })
+                                </div>
+                                <button id="saveButton" class="btn btn-icon btn-3 btn-primary" type="submit" disabled>
+                                    <span class="btn-inner--icon"><i class="fas fa-save"></i></span>
+                                    <span class="btn-inner--text">Lưu thông tin</span>
+                                </button>
+                                <a href="/Admin/Topics/Index" class="btn btn-icon btn-3 btn-danger">
+                                    <span class="btn-inner--icon"><i class="fas fa-times"></i></span>
+                                    <span class="btn-inner--text">Hủy bỏ</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var requiredInputs = document.querySelectorAll('input, select, textarea');
+
+        // Lặp qua các trường input và thêm sự kiện "input" để kiểm tra khi nào người dùng nhập giá trị
+        requiredInputs.forEach(function (input) {
+            input.addEventListener('input', function () {
+                // Kiểm tra xem tất cả các trường input bắt buộc có giá trị không
+                var allInputsFilled = Array.from(requiredInputs).every(function (input) {
+                    return input.value.trim() !== ''; // Kiểm tra giá trị có trống không
+                });
+
+                // Kích hoạt hoặc vô hiệu hóa button "Lưu thông tin" dựa trên kết quả kiểm tra
+                document.getElementById('saveButton').disabled = !allInputsFilled;
+            });
+        });
+    </script>
+}

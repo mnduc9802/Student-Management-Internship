@@ -1,0 +1,87 @@
+﻿@model QuanLySinhVienThucTap.Models.Student
+
+@{
+    ViewBag.Title = "Details";
+    string name = Model.LastName + " " + Model.FirstName;
+    DateTime dateOfbirth = Model.DateOfBirth.GetValueOrDefault(); ;
+    string formattedDate = dateOfbirth.ToString("dd/MM/yyyy");
+    string status = "";
+    if (Model.Status == true)
+    {
+        status = "Làm tại doanh nghiệp";
+    }
+    else
+    {
+        status = "Làm ngoài";
+    }
+}
+
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-frame mb-4">
+                <div class="card-header">
+                    <h5 class="card-title text-center">Thông tin sinh viên</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <label class="form-control-label">Mã sinh viên:</label>
+                                @Html.DisplayFor(model => model.StudentCode)
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Họ và Tên sinh viên:</label>
+                                @name
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Địa chỉ:</label>
+                                @Html.DisplayFor(model => model.Address)
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Số điện thoại:</label>
+                                @Html.DisplayFor(model => model.PhoneNumber)
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Email:</label>
+                                @Html.DisplayFor(model => model.Email)
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <label class="form-control-label">Ngày sinh:</label>
+                                @formattedDate
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Giới tính:</label>
+                                @Html.DisplayFor(model => model.Gender)
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Lớp học:</label>
+                                @Html.DisplayFor(model => model.Classroom)
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Điểm GPA:</label>
+                                @Html.DisplayFor(model => model.GPAScore)
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Điểm chữ:</label>
+                                @Html.DisplayFor(model => model.LetterScore)
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Trạng thái:</label>
+                                @status
+                            </div>
+                            <a href="@Url.Action("Edit", "Students", new { id = Model.StudentID })" class="btn btn-icon btn-3 btn-dark">
+                                <span class="btn-inner--icon"><i class="fas fa-pencil-alt"></i>&nbsp;&nbsp;Sửa</span>
+                            </a>
+                            <a href="@Url.Action("Index", "Students")" class="btn btn-icon btn-3 btn-danger">
+                                <span class="btn-inner--icon"><i class="fas fa-times"></i>&nbsp;&nbsp;Trở về</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

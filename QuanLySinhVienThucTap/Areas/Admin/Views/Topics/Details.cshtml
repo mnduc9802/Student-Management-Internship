@@ -1,0 +1,83 @@
+﻿@model QuanLySinhVienThucTap.Models.Topic
+
+@{
+    string CapitalizeFirstLetter(string input)
+    {
+        if (string.IsNullOrEmpty(input))
+        {
+            return input;
+        }
+
+        string[] words = input.Split(' ');
+        for (int i = 0; i < words.Length; i++)
+        {
+            if (!string.IsNullOrWhiteSpace(words[i]))
+            {
+                words[i] = char.ToUpper(words[i][0]) + words[i].Substring(1).ToLower();
+            }
+        }
+
+        return string.Join(" ", words);
+    }
+    string macb;
+    if (Model.EmployeeID < 10)
+    {
+        macb = "0102630" + Model.EmployeeID;
+    }
+    else
+    {
+        macb = "010263" + Model.EmployeeID;
+    }
+    ViewBag.Title = "Details";
+    string name = CapitalizeFirstLetter(Model.Student.LastName + " " + Model.Student.FirstName);
+}
+
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-frame mb-4">
+                <div class="card-header">
+                    <h5 class="card-title text-center">Thông tin đề tài</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <label class="form-control-label">Mã Sinh viên:</label>
+                                @Html.DisplayFor(model => model.Student.StudentCode)
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Tên Sinh viên:</label>
+                                @name
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Mã Cán bộ hướng dẫn:</label>
+                                @macb
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Tên Cán bộ hướng dẫn:</label>
+                                @Html.DisplayFor(model => model.Employee.Name)
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <label class="form-control-label">Tên đề tài</label>
+                                @Html.DisplayFor(model => model.Title)
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Mô tả:</label>
+                                @Html.DisplayFor(model => model.Description)
+                            </div>
+                            <a href="@Url.Action("Edit", "Topics", new { id = Model.TopicID })" class="btn btn-icon btn-3 btn-dark">
+                                <span class="btn-inner--icon"><i class="fas fa-pencil-alt"></i>&nbsp;&nbsp;Sửa</span>
+                            </a>
+                            <a href="@Url.Action("Index", "Topics")" class="btn btn-icon btn-3 btn-danger">
+                                <span class="btn-inner--icon"><i class="fas fa-times"></i>&nbsp;&nbsp;Trở về</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

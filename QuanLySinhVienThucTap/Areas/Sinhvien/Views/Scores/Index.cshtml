@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.Title = "Scores";
+}
+
+<body class="g-sidenav-show bg-gray-100">
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header pb-0">
+                        <p class="text-uppercase text-sm">Kết quả thực tập sinh viên</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Tên đề tài</label>
+                                    <input class="form-control" type="text" value="@Session["Tendetai"]" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Cán bộ hướng dẫn</label>
+                                    <input class="form-control" type="text" value="@Session["CanboHD"]" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Công ty thực tập</label>
+                                    <input class="form-control" type="text" value="@Session["Congty"]" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Điểm 1</label>
+                                    <input class="form-control" type="text" value="@Session["Diem1"]" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Điểm 2</label>
+                                    <input class="form-control" type="text" value="@Session["Diem2"]" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Điểm 3</label>
+                                    <input class="form-control" type="text" value="@Session["Diem3"]" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Điểm 4</label>
+                                    <input class="form-control" type="text" value="@Session["Diem4"]" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Điểm 5</label>
+                                    <input class="form-control" type="text" value="@Session["Diem5"]" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Điểm trung bình</label>
+                                    <input class="form-control" type="text" value="@Session["DiemTB"]" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Đánh giá</label>
+                                    <input class="form-control" type="text" value="@Session["Danhgia"]" readonly="readonly">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

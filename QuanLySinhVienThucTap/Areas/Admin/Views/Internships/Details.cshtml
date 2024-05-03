@@ -1,0 +1,103 @@
+﻿@model QuanLySinhVienThucTap.Models.Internship
+
+@{
+    ViewBag.Title = "Details";
+    string CapitalizeFirstLetter(string input)
+    {
+        if (string.IsNullOrEmpty(input))
+        {
+            return input;
+        }
+
+        string[] words = input.Split(' ');
+        for (int i = 0; i < words.Length; i++)
+        {
+            if (!string.IsNullOrWhiteSpace(words[i]))
+            {
+                words[i] = char.ToUpper(words[i][0]) + words[i].Substring(1).ToLower();
+            }
+        }
+
+        return string.Join(" ", words);
+    }
+    string GenerateCode(int ID)
+    {
+        return ID < 10 ? "0102630" + ID : "010263" + ID;
+    }
+    string magv = GenerateCode(Model.Teacher.TeacherID);
+    string macb = GenerateCode(Model.Employee.EmployeeID);
+    ViewBag.Title = "Details";
+    string namesv = CapitalizeFirstLetter(Model.Student.LastName + " " + Model.Student.FirstName);
+    string namegv = CapitalizeFirstLetter(Model.Teacher.LastName + " " + Model.Teacher.FirstName);
+    string namecb = CapitalizeFirstLetter(Model.Employee.Name);
+    DateTime datestart = Model.Start_Day.GetValueOrDefault(); ;
+    DateTime dateend = Model.End_Day.GetValueOrDefault();
+    string formattedDateStart = datestart.ToString("dd/MM/yyyy");
+    string formattedDateEnd = dateend.ToString("dd/MM/yyyy");
+}
+
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-frame mb-4">
+                <div class="card-header">
+                    <h5 class="card-title text-center">Thông tin tiến độ thực tập</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <label class="form-control-label">Mã Sinh viên:</label>
+                                @Html.DisplayFor(model => model.Student.StudentCode)
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Tên Sinh viên:</label>
+                                @namesv
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Mã Cán bộ hướng dẫn:</label>
+                                @macb
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Tên Cán bộ hướng dẫn:</label>
+                                @namecb
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Mã Giảng viên:</label>
+                                @magv
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Tên Giảng viên:</label>
+                                @namegv
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <label class="form-control-label">Công ty thực tập:</label>
+                                @Html.DisplayFor(model => model.Employee.CompanyName)
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Địa chỉ thực tập:</label>
+                                @Html.DisplayFor(model => model.Employee.CompanyAddress)
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Ngày bắt đầu:</label>
+                                @formattedDateStart
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Ngày kết thúc:</label>
+                                @formattedDateEnd
+                            </div>
+                            <a href="@Url.Action("Edit", "Internships", new { id = Model.InternShipID })" class="btn btn-icon btn-3 btn-dark">
+                                <span class="btn-inner--icon"><i class="fas fa-pencil-alt"></i>&nbsp;&nbsp;Sửa</span>
+                            </a>
+                            <a href="@Url.Action("Index", "Internships")" class="btn btn-icon btn-3 btn-danger">
+                                <span class="btn-inner--icon"><i class="fas fa-times"></i>&nbsp;&nbsp;Trở về</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

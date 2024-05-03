@@ -1,0 +1,149 @@
+﻿@model QuanLySinhVienThucTap.Models.Student
+
+@{
+    ViewBag.Title = "Edit";
+    DateTime dateOfbirth = Model.DateOfBirth.GetValueOrDefault(); ;
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-frame mb-4">
+                    <div class="card-header">
+                        <h5 class="card-title text-center">Cập nhật thông tin sinh viên</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm">
+                                <div class="form-group">
+                                    @Html.HiddenFor(model => model.StudentID)
+                                    <label for="code" class="form-control-label">Mã sinh viên</label>
+                                    @Html.EditorFor(model => model.StudentCode, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.StudentCode, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastname" class="form-control-label">Họ và tên đệm</label>
+                                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="firstname" class="form-control-label">Tên sinh viên</label>
+                                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="address" class="form-control-label">Địa chỉ</label>
+                                    @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="tel" class="form-control-label">Số điện thoại</label>
+                                    @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", type = "tel", pattern = "[0-9]{10,11}", title = "Số điện thoại phải chứa từ 10 đến 11 chữ số" } })
+                                    @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="form-control-label">Email</label>
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", type = "email" } })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm">
+                                <div class="form-group">
+                                    <label for="date" class="form-control-label">Ngày sinh</label>
+                                    @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { @class = "form-control", type = "date", @id = "date" } })
+                                    @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <label>Giới tính</label><br />
+                                    <div class="d-flex">
+                                        <div class="form-check me-3">
+                                            @Html.RadioButton("gender", "Nam", true, new { @class = "form-check-input", @id = "nam" })
+                                            <label class="form-check-label" for="nam">Nam</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @Html.RadioButton("gender", "Nữ", false, new { @class = "form-check-input", @id = "nu" })
+                                            <label class="form-check-label" for="nu">Nữ</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="classroom">Lớp học</label>
+                                    <div class="input-group mb-4">
+                                        @Html.DropDownList("Classroom", new SelectList(new[] { "DHTI14A2CL", "DHTI14A1CL", "DHTI14A1HN", "DHTI14A2HN", "DHTI14A3HN", "DHTI14A4HN", "DHTI14A5HN", "DHTI14A6HN", "DHTI14A7HN", "DHTI14A8HN", "DHTI14A9HN", "DHTI14A10HN", "DHTI14A11HN", "DHTI14A12HN" }), new { @class = "form-control", @id = "classroom" })
+                                        <span class="input-group-text"><i class="ni ni-bold-down"></i></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="gpascore" class="form-control-label">Điểm GPA</label>
+                                    @Html.EditorFor(model => model.GPAScore, new { htmlAttributes = new { @class = "form-control", @oninput = "convertToLetterGrade(this.value)" } })
+                                    @Html.ValidationMessageFor(model => model.GPAScore, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="letterscore" class="form-control-label">Điểm chữ</label>
+                                    @Html.EditorFor(model => model.LetterScore, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @id = "letterscore" } })
+                                    @Html.ValidationMessageFor(model => model.LetterScore, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="status" class="form-control-label">Trạng thái</label>
+                                    @Html.DropDownListFor(model => model.Status, new List<SelectListItem>
+                                    {
+                                        new SelectListItem { Text = "Làm tại doanh nghiệp", Value = "True" },
+                                        new SelectListItem { Text = "Làm ngoài", Value = "False" }
+                                    }, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                                </div>
+                                <button id="saveButton" class="btn btn-icon btn-3 btn-primary" type="submit">
+                                    <span class="btn-inner--icon"><i class="fas fa-save"></i></span>
+                                    <span class="btn-inner--text">Lưu thông tin</span>
+                                </button>
+                                <a href="/Admin/Students/Index" class="btn btn-icon btn-3 btn-danger">
+                                    <span class="btn-inner--icon"><i class="fas fa-times"></i></span>
+                                    <span class="btn-inner--text">Hủy bỏ</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Hàm để quy đổi điểm GPA thành điểm chữ
+        function convertToLetterGrade(gpa) {
+            var letterGrade;
+            if (gpa >= 3.8) letterGrade = "A";
+            else if (gpa >= 3.5) letterGrade = "B+";
+            else if (gpa >= 3) letterGrade = "B";
+            else if (gpa >= 2.5) letterGrade = "C+";
+            else if (gpa >= 2) letterGrade = "C";
+            else if (gpa >= 1.5) letterGrade = "D+";
+            else if (gpa >= 1) letterGrade = "D";
+            else letterGrade = "F";
+
+            // Hiển thị điểm chữ vào trường điểm chữ
+            document.getElementById('letterscore').value = letterGrade;
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+        var dateInput = document.getElementById('date');
+            var defaultDate = '@dateOfbirth.ToString("yyyy-MM-dd")'; // Lấy giá trị ngày từ mô hình
+            console.log(defaultDate);
+        dateInput.value = defaultDate;
+        });
+    </script>
+    <!--   Core JS Files   -->
+    <script src="~/Content/assets/js/core/popper.min.js"></script>
+    <script src="~/Content/assets/js/core/bootstrap.min.js"></script>
+    <script src="~/Content/assets/js/plugins/perfect-scrollbar.min.js"></script>
+    <script src="~/Content/assets/js/plugins/smooth-scrollbar.min.js"></script>
+    <script src="~/Content/assets/js/plugins/chartjs.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Github buttons -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="~/Content/assets/js/argon-dashboard.min.js?v=2.0.4"></script>
+
+}

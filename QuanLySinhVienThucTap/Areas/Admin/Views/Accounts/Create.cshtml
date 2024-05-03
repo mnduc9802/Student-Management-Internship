@@ -1,0 +1,84 @@
+﻿@model QuanLySinhVienThucTap.Models.Account
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-frame mb-4">
+                    <div class="card-header">
+                        <h5 class="card-title text-center">Thêm tài khoản mới</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm">
+                                <div class="form-group">
+                                    <label for="username" class="form-control-label">Tên đăng nhập</label>
+                                    @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="password" class="form-control-label">Mật khẩu</label>
+                                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="role" class="form-control-label">Quyền</label>
+                                    @Html.DropDownListFor(model => model.RoleID, new SelectList(new[]
+                                    {
+                                        new SelectListItem { Value = "1", Text = "Admin" },
+                                        new SelectListItem { Value = "2", Text = "Teacher" },
+                                        new SelectListItem { Value = "3", Text = "Employee" },
+                                        new SelectListItem { Value = "4", Text = "Student" }
+                                    }, "Value", "Text"), "Chọn quyền", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.RoleID, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="status" class="form-control-label">Trạng thái</label>
+                                    @Html.DropDownListFor(model => model.Status, new List<SelectListItem>
+                                    {
+                                        new SelectListItem { Text = "Hoạt động", Value = "True" },
+                                        new SelectListItem { Text = "Không hoạt động", Value = "False" }
+                                    }, "Chọn trạng thái", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm">
+                                <button id="saveButton" class="btn btn-icon btn-3 btn-primary" type="submit" disabled>
+                                    <span class="btn-inner--icon"><i class="fas fa-save"></i></span>
+                                    <span class="btn-inner--text">Lưu thông tin</span>
+                                </button>
+                                <a href="/Admin/Accounts/Index" class="btn btn-icon btn-3 btn-danger">
+                                    <span class="btn-inner--icon"><i class="fas fa-times"></i></span>
+                                    <span class="btn-inner--text">Hủy bỏ</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var requiredInputs = document.querySelectorAll('input, select, textarea');
+
+        // Lặp qua các trường input và thêm sự kiện "input" để kiểm tra khi nào người dùng nhập giá trị
+        requiredInputs.forEach(function (input) {
+            input.addEventListener('input', function () {
+                // Kiểm tra xem tất cả các trường input bắt buộc có giá trị không
+                var allInputsFilled = Array.from(requiredInputs).every(function (input) {
+                    return input.value.trim() !== ''; // Kiểm tra giá trị có trống không
+                });
+
+                // Kích hoạt hoặc vô hiệu hóa button "Lưu thông tin" dựa trên kết quả kiểm tra
+                document.getElementById('saveButton').disabled = !allInputsFilled;
+            });
+        });
+    </script>
+}

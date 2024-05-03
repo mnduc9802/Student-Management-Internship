@@ -1,0 +1,218 @@
+﻿@model IPagedList<QuanLySinhVienThucTap.Models.Score>
+@using PagedList.Mvc;
+@using PagedList;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="color: #fff;">
+        <span class="alert-text"><strong>Danger!</strong>@ViewBag.ErrorMessage</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+@if (ViewBag.StudentNotFoundCount != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="color: #fff;">
+        <span class="alert-text"><strong>Danger!</strong>@ViewBag.StudentError</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+@if (ViewBag.TopicNotFoundCount != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="color: #fff;">
+        <span class="alert-text"><strong>Danger!</strong>@ViewBag.EmployeeError</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+<style>
+    .table td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
+
+
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header pb-0">
+                    <div class="row">
+                        <div class="col-6 d-flex align-items-center">
+                            <h6 class="mb-0">Danh sách điểm</h6>
+                        </div>
+                        <div class="col-6 text-end">
+                            <a class="btn bg-gradient-success mb-0" href="@Url.Action("Create","Scores")"><i class="fas fa-plus"></i>&nbsp;&nbsp;Thêm điểm</a>
+                        </div>
+                    </div>
+                    <div class="container" style="margin-top: 10px">
+                        <div class="row">
+                            <div class="col-sm">
+                                @using (Html.BeginForm("Index", "Scores", FormMethod.Get))
+                                {
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <div class="form-group">
+                                                <input class="form-control" type="text" placeholder="Tìm theo mã sinh viên..." name="masv">
+                                            </div>
+                                            <div class="form-group">
+                                                <input class="form-control" type="text" placeholder="Tìm theo đánh giá..." name="assessment">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm">
+                                            <div class="form-group">
+                                                <input class="form-control" type="text" placeholder="Tìm theo tên đề tài..." name="nametopic">
+                                            </div>
+                                            <button class="btn btn-icon btn-3 btn-primary" type="submit">
+                                                <span class="btn-inner--icon"><i class="fas fa-search"></i></span>
+                                                <span class="btn-inner--text">Tìm kiếm</span>
+                                            </button>
+                                            <button class="btn btn-icon btn-3 btn-danger" type="reset">
+                                                <span class="btn-inner--icon"><i class="fa fa-rotate-left"></i></span>
+                                                <span class="btn-inner--text">Làm mới</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <div class="col-sm">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <form action="Scores/Export" method="post">
+                                            <label class="btn bg-gradient-success mb-0" href="#">
+                                                <input type="submit" style="display: none;">
+                                                <i class="fas fa-upload"></i>&nbsp;&nbsp;Xuất Excel
+                                            </label>
+                                        </form>
+                                    </div>
+                                    <div class="col-sm-6" style="margin-left: -180px">
+                                        <a class="btn bg-gradient-primary mb-0" href="#" data-bs-toggle="modal" data-bs-target="#modalimport">
+                                            <i class="fas fa-download"></i>&nbsp;&nbsp;Nhập Excel
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @if (Model != null && Model.Any())
+                {
+                    <div class="card-body px-0 pt-0 pb-2">
+                        <div class="table-responsive p-0">
+                            <table class="table align-items-center mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">STT</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Mã sinh viên</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tên sinh viên</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Điểm 1</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Điểm 2</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Điểm 3</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Điểm 4</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Điểm 5</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Điểm Trung Bình</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Đánh giá</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tên đề tài</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Chức năng</th>
+                                    </tr>
+                                </thead>
+                                @{
+                                    string CapitalizeFirstLetter(string input)
+                                    {
+                                        if (string.IsNullOrEmpty(input))
+                                        {
+                                            return input;
+                                        }
+
+                                        string[] words = input.Split(' ');
+                                        for (int i = 0; i < words.Length; i++)
+                                        {
+                                            if (!string.IsNullOrWhiteSpace(words[i]))
+                                            {
+                                                words[i] = char.ToUpper(words[i][0]) + words[i].Substring(1).ToLower();
+                                            }
+                                        }
+
+                                        return string.Join(" ", words);
+                                    }
+                                }
+                                @foreach (var item in Model)
+                                {
+                                    double score1 = Convert.ToDouble(item.Score1.GetValueOrDefault());
+                                    double score2 = Convert.ToDouble(item.Score2.GetValueOrDefault());
+                                    double score3 = Convert.ToDouble(item.Score3.GetValueOrDefault());
+                                    double score4 = Convert.ToDouble(item.Score4.GetValueOrDefault());
+                                    double score5 = Convert.ToDouble(item.Score5.GetValueOrDefault());
+                                    string namesv = CapitalizeFirstLetter(item.Topic.Student.LastName + " " + item.Topic.Student.FirstName);
+
+                                    // Tính trung bình
+                                    double scoretb = (score1 + score2 + score3 + score4 + score5) / 5;
+                                    <tbody>
+                                        <tr>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-xs font-weight-bold">@item.ScoreID</span>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-xs font-weight-bold">@item.Topic.Student.StudentCode</span>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <h6 class="mb-0 text-sm">@namesv</h6>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-xs font-weight-bold">@item.Score1</span>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-xs font-weight-bold">@item.Score2</span>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-xs font-weight-bold">@item.Score3</span>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-xs font-weight-bold">@item.Score4</span>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-xs font-weight-bold">@item.Score5</span>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-xs font-weight-bold">@scoretb</span>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-xs font-weight-bold">@item.Assessment</span>
+                                            </td>
+                                            <td class="align-middle text-center" style="max-width: 100px">
+                                                <span class="text-secondary text-xs font-weight-bold">@item.Topic.Title</span>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <a class="btn btn-link text-primary px-3 mb-0" href="@Url.Action("Details", new { id = item.ScoreID })"><i class="fas fa-eye text-primary me-2" aria-hidden="true"></i>Xem</a>
+                                                <a class="btn btn-link text-dark px-3 mb-0" href="@Url.Action("Edit", new { id = item.ScoreID })"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Sửa</a>
+                                                <a class="btn btn-link text-danger text-gradient px-3 mb-0" onclick="setDeleteParams('/Admin/Scores/Delete/', '@item.ScoreID', '/Admin/Scores/Index')" data-bs-toggle="modal" data-bs-target="#modalmessage"> <i class="far fa-trash-alt me-2"></i>Xóa</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchTitle = Request.QueryString["searchTitle"] }))
+                }
+                @Html.Partial("~/Areas/Admin/Views/Shared/Import.cshtml")
+                @Html.Partial("~/Areas/Admin/Views/Shared/ModalMessage.cshtml")
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Github buttons -->
+<script src="~/Content/assets/js/DeleteRecord.js"></script>

@@ -1,0 +1,105 @@
+﻿@model IEnumerable<QuanLySinhVienThucTap.Models.Account>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert" style="color: #fff;">
+        <span class="alert-text"><strong>Success!</strong>@ViewBag.Message</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header pb-0">
+                    <div class="row">
+                        <div class="col-6 d-flex align-items-center">
+                            <h6 class="mb-0">Danh sách tài khoản</h6>
+                        </div>
+                        <div class="col-6 text-end">
+                            <a class="btn bg-gradient-success mb-0" href="@Url.Action("Create","Accounts")"><i class="fas fa-plus"></i>&nbsp;&nbsp;Thêm tài khoản</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body px-0 pt-0 pb-2">
+                    <div class="table-responsive p-0">
+                        <table class="table align-items-center mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">STT</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tên đăng nhập</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Mật khẩu</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Quyền</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Trạng thái</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Chức năng</th>
+                                </tr>
+                            </thead>
+                            @foreach (var item in Model)
+                            {
+                                <tbody>
+                                    <tr>
+                                        <td class="align-middle text-center">
+                                            <span class="text-secondary text-xs font-weight-bold">@item.AccountID</span>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <span class="text-secondary text-xs font-weight-bold">@item.Username</span>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <span class="text-secondary text-xs font-weight-bold">@item.Password</span>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            @{
+                                                string roleText = "";
+                                                switch (item.RoleID)
+                                                {
+                                                    case 1:
+                                                        roleText = "Admin";
+                                                        break;
+                                                    case 2:
+                                                        roleText = "Teacher";
+                                                        break;
+                                                    case 3:
+                                                        roleText = "Employee";
+                                                        break;
+                                                    case 4:
+                                                        roleText = "Student";
+                                                        break;
+                                                    default:
+                                                        roleText = "Unknown";
+                                                        break;
+                                                }
+                                            }
+                                            <span class="text-secondary text-xs font-weight-bold">@roleText</span>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            @{
+                                                string statusText = (item.Status ?? false) ? "Hoạt động" : "Không hoạt động";
+                                            }
+                                            <span class="text-secondary text-xs font-weight-bold">@statusText</span>
+                                        </td>
+                                        <td class="d-flex justify-content-end">
+                                            <a class="btn btn-link text-primary px-3 mb-0" href="@Url.Action("Details", new { id = item.AccountID })"><i class="fas fa-eye text-primary me-2" aria-hidden="true"></i>Xem</a>
+                                            <a class="btn btn-link text-dark px-3 mb-0" href="@Url.Action("Edit", new { id = item.AccountID })"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Sửa</a>
+                                            <a class="btn btn-link text-danger text-gradient px-3 mb-0" onclick="setDeleteParams('/Admin/Accounts/Delete/', '@item.AccountID', '/Admin/Accounts/Index')" data-bs-toggle="modal" data-bs-target="#modalmessage"> <i class="far fa-trash-alt me-2"></i>Xóa</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            }
+                        </table>
+                    </div>
+                </div>
+                @Html.Partial("~/Areas/Admin/Views/Shared/Import.cshtml")
+                @Html.Partial("~/Areas/Admin/Views/Shared/ModalMessage.cshtml")
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/Content/assets/js/DeleteRecord.js"></script>

@@ -1,0 +1,133 @@
+﻿@model QuanLySinhVienThucTap.Models.Score
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-frame mb-4">
+                    <div class="card-header">
+                        <h5 class="card-title text-center">Thêm điểm mới</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm">
+                                <div class="form-group">
+                                    <label for="score1" class="form-control-label">Điểm 1</label>
+                                    @Html.EditorFor(model => model.Score1, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Score1, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="score2" class="form-control-label">Điểm 2</label>
+                                    @Html.EditorFor(model => model.Score2, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Score2, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="score3" class="form-control-label">Điểm 3</label>
+                                    @Html.EditorFor(model => model.Score3, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Score3, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="score4" class="form-control-label">Điểm 4</label>
+                                    @Html.EditorFor(model => model.Score4, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Score4, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="score5" class="form-control-label">Điểm 5</label>
+                                    @Html.EditorFor(model => model.Score5, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Score5, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm">
+                                <div class="form-group">
+                                    <label for="averageScore" class="form-control-label">Điểm Trung bình</label>
+                                    <input id="averageScore" type="text" class="form-control" readonly />
+                                </div>
+                                <div class="form-group">
+                                    <label for="assessment" class="form-control-label">Đánh giá</label>
+                                    @Html.EditorFor(model => model.Assessment, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @id = "assessment" } })
+                                </div>
+                                <div class="form-group">
+                                    <label for="topicid" class="form-control-label">Tên Đề tài</label>
+                                    @Html.DropDownList("TopicID", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.TopicID, "", new { @class = "text-danger" })
+                                </div>
+                                @*<div class="form-group">
+                                    <label for="studentname" class="form-control-label">Tên Sinh viên</label>
+                                    @Html.DropDownList("StudentName", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.TopicID, "", new { @class = "text-danger" })
+                                </div>*@
+                                @*<div class="form-group">
+                                    <label for="classroom" class="form-control-label">Lớp</label>
+                                    @Html.EditorFor(model => model.Classroom, new { @class = "form-control", @readonly = "readonly" })
+                                </div>*@
+                                <button id="saveButton" class="btn btn-icon btn-3 btn-primary" type="submit" disabled>
+                                    <span class="btn-inner--icon"><i class="fas fa-save"></i></span>
+                                    <span class="btn-inner--text">Lưu thông tin</span>
+                                </button>
+                                <a href="/Admin/Scores/Index" class="btn btn-icon btn-3 btn-danger">
+                                    <span class="btn-inner--icon"><i class="fas fa-times"></i></span>
+                                    <span class="btn-inner--text">Hủy bỏ</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var requiredInputs = document.querySelectorAll('input, select, textarea');
+
+        // Lặp qua các trường input và thêm sự kiện "input" để kiểm tra khi nào người dùng nhập giá trị
+        requiredInputs.forEach(function (input) {
+            input.addEventListener('input', function () {
+                // Kiểm tra xem tất cả các trường input bắt buộc có giá trị không
+                var allInputsFilled = Array.from(requiredInputs).every(function (input) {
+                    return input.value.trim() !== ''; // Kiểm tra giá trị có trống không
+                });
+
+                // Kích hoạt hoặc vô hiệu hóa button "Lưu thông tin" dựa trên kết quả kiểm tra
+                document.getElementById('saveButton').disabled = !allInputsFilled;
+            });
+        });
+        function calculateAndDisplay() {
+            var score1 = parseFloat(document.getElementById('Score1').value) || 0;
+            var score2 = parseFloat(document.getElementById('Score2').value) || 0;
+            var score3 = parseFloat(document.getElementById('Score3').value) || 0;
+            var score4 = parseFloat(document.getElementById('Score4').value) || 0;
+            var score5 = parseFloat(document.getElementById('Score5').value) || 0;
+
+            var averageScore = (score1 + score2 + score3 + score4 + score5) / 5;
+            document.getElementById('averageScore').value = averageScore.toFixed(2);
+
+            var assessment = '';
+            if (averageScore >= 8.5) {
+                assessment = 'Giỏi';
+            } else if (averageScore >= 7) {
+                assessment = 'Khá';
+            } else if (averageScore >= 5.5) {
+                assessment = 'Trung Bình';
+            } else {
+                assessment = 'Yếu';
+            }
+
+            document.getElementById('assessment').value = assessment;
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            calculateAndDisplay();
+            document.getElementById('Score1').addEventListener('input', calculateAndDisplay);
+            document.getElementById('Score2').addEventListener('input', calculateAndDisplay);
+            document.getElementById('Score3').addEventListener('input', calculateAndDisplay);
+            document.getElementById('Score4').addEventListener('input', calculateAndDisplay);
+            document.getElementById('Score5').addEventListener('input', calculateAndDisplay);
+        });
+    </script>
+}

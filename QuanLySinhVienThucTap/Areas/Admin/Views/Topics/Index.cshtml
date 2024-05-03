@@ -1,0 +1,180 @@
+﻿@model IPagedList<QuanLySinhVienThucTap.Models.Topic>
+@using PagedList.Mvc;
+@using PagedList;
+@{
+    ViewBag.Title = "Index";
+}
+
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="color: #fff;">
+        <span class="alert-text"><strong>Danger!</strong>@ViewBag.ErrorMessage</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+<style>
+    .table td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header pb-0">
+                    <div class="row">
+                        <div class="col-6 d-flex align-items-center">
+                            <h6 class="mb-0">Danh sách đề tài</h6>
+                        </div>
+                        <div class="col-6 text-end">
+                            <a class="btn bg-gradient-success mb-0" href="@Url.Action("Create", "Topics")"><i class="fas fa-plus"></i>&nbsp;&nbsp;Thêm đề tài</a>
+                        </div>
+                    </div>
+                    <div class="container" style="margin-top: 10px">
+                        <div class="row">
+                            <div class="col-sm">
+                                @using (Html.BeginForm("Index", "Topics", FormMethod.Get))
+                                {
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <div class="form-group">
+                                                <input class="form-control" type="text" placeholder="Tìm theo mã sinh viên..." name="masv">
+                                            </div>
+                                            <div class="form-group">
+                                                <input class="form-control" type="text" placeholder="Tìm theo mã cán bộ..." name="macb">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm">
+                                            <div class="form-group">
+                                                <input class="form-control" type="text" placeholder="Tìm theo tên đề tài..." name="title">
+                                            </div>
+                                            <button class="btn btn-icon btn-3 btn-primary" type="submit">
+                                                <span class="btn-inner--icon"><i class="fas fa-search"></i></span>
+                                                <span class="btn-inner--text">Tìm kiếm</span>
+                                            </button>
+                                            <button class="btn btn-icon btn-3 btn-danger" type="reset">
+                                                <span class="btn-inner--icon"><i class="fa fa-rotate-left"></i></span>
+                                                <span class="btn-inner--text">Làm mới</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <div class="col-sm">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <form action="Topics/Export" method="post">
+                                            <label class="btn bg-gradient-success mb-0" href="#">
+                                                <input type="submit" style="display: none;">
+                                                <i class="fas fa-upload"></i>&nbsp;&nbsp;Xuất Excel
+                                            </label>
+                                        </form>
+                                    </div>
+                                    <div class="col-sm-6" style="margin-left: -180px">
+                                        <a class="btn bg-gradient-primary mb-0" href="#" data-bs-toggle="modal" data-bs-target="#modalimport">
+                                            <i class="fas fa-download"></i>&nbsp;&nbsp;Nhập Excel
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @if (Model != null && Model.Any())
+                {
+                    <div class="card-body px-0 pt-0 pb-2">
+                        <div class="table-responsive p-0">
+                            <table class="table align-items-center mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">STT</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Mã Sinh viên</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tên Sinh viên</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Mã Cán bộ hướng dẫn</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tên Cán bộ hướng dẫn</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tên đề tài</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Mô tả</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Chức năng</th>
+                                    </tr>
+                                </thead>
+                                @{
+                                    string CapitalizeFirstLetter(string input)
+                                    {
+                                        if (string.IsNullOrEmpty(input))
+                                        {
+                                            return input;
+                                        }
+
+                                        string[] words = input.Split(' ');
+                                        for (int i = 0; i < words.Length; i++)
+                                        {
+                                            if (!string.IsNullOrWhiteSpace(words[i]))
+                                            {
+                                                words[i] = char.ToUpper(words[i][0]) + words[i].Substring(1).ToLower();
+                                            }
+                                        }
+
+                                        return string.Join(" ", words);
+                                    }
+                                }
+                                @foreach (var item in Model)
+                                {
+                                    string name = CapitalizeFirstLetter(item.Student.LastName + " " + item.Student.FirstName);
+                                    string macb;
+                                    if (item.EmployeeID < 10)
+                                    {
+                                        macb = "0102630" + item.EmployeeID;
+                                    }
+                                    else
+                                    {
+                                        macb = "010263" + item.EmployeeID;
+                                    }
+                                    <tbody>
+                                        <tr>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-xs font-weight-bold">@item.TopicID</span>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-xs font-weight-bold">@item.Student.StudentCode</span>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <h6 class="mb-0 text-sm">@name</h6>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-xs font-weight-bold">@macb</span>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <h6 class="mb-0 text-sm">@item.Employee.Name</h6>
+                                            </td>
+                                            <td class="align-middle text-center" style="max-width: 150px">
+                                                <span class="text-secondary text-xs font-weight-bold">@item.Title</span>
+                                            </td>
+                                            <td class="align-middle text-center" style="max-width: 150px">
+                                                <span class="text-secondary text-xs font-weight-bold">@item.Description</span>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <a class="btn btn-link text-primary px-3 mb-0" href="@Url.Action("Details", new { id = item.TopicID })"><i class="fas fa-eye text-primary me-2" aria-hidden="true"></i>Xem</a>
+                                                <a class="btn btn-link text-dark px-3 mb-0" href="@Url.Action("Edit", new { id = item.TopicID })"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Sửa</a>
+                                                <a class="btn btn-link text-danger text-gradient px-3 mb-0" onclick="setDeleteParams('/Admin/Topics/Delete/', '@item.TopicID', '/Admin/Topics/Index')" data-bs-toggle="modal" data-bs-target="#modalmessage"> <i class="far fa-trash-alt me-2"></i>Xóa</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchTitle = Request.QueryString["searchTitle"] }))
+                }
+                @Html.Partial("~/Areas/Admin/Views/Shared/Import.cshtml")
+                @Html.Partial("~/Areas/Admin/Views/Shared/ModalMessage.cshtml")
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Github buttons -->
+<script src="~/Content/assets/js/DeleteRecord.js"></script>

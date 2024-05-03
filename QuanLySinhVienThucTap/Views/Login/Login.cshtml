@@ -1,0 +1,124 @@
+﻿@model QuanLySinhVienThucTap.Models.Login
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>
+        Đăng nhập
+    </title>
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    <!-- Nucleo Icons -->
+    <link href="~/Content/assets/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="~/Content/assets/css/nucleo-svg.css" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <link href="~/Content/assets/css/nucleo-svg.css" rel="stylesheet" />
+    <!-- CSS Files -->
+    <link id="pagestyle" href="~/Content/assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+    <style>
+        .password{
+            position: relative;
+        }
+        .pass-icon{
+            position: absolute;
+            top: 16px;
+            right: 15px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="main-content mt-0">
+        <section>
+            <div class="page-header min-vh-100">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
+                            <div class="card card-plain">
+                                <div class="card-header pb-0 text-start">
+                                    <h4 class="font-weight-bolder">Đăng nhập</h4>
+                                    <p class="mb-0">Nhập tài khoản và mật khẩu</p>
+                                </div>
+                                <div class="card-body">
+                                    @using (Html.BeginForm("Login", "Login", FormMethod.Post, new { @class = "form" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+
+                                        <div class="mb-3">
+                                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control form-control-lg", placeholder = "Tên tài khoản", aria_label = "Email" })
+                                            @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                                        </div>
+
+                                        <div class="mb-3 password">
+                                            @Html.TextBoxFor(m => m.Password, new { @class = "form-control form-control-lg", type = "password", placeholder = "Mật khẩu", aria_label = "Password", @id = "password" })
+                                            <i onclick="pass()" class="fas fa-eye-slash pass-icon" id="pass-icon"></i>
+                                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                        </div>
+
+                                        if (!ViewData.ModelState.IsValid)
+                                        {
+                                            <div class="text-danger">
+                                                @foreach (var modelError in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                                                {
+                                                    <p>@modelError.ErrorMessage</p>
+                                                }
+                                            </div>
+                                        }
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Đăng nhập</button>
+                                        </div>
+                                    }
+
+                                </div>
+                                <div class="card-footer text-center pt-0 px-lg-2 px-1">
+                                    <p class="mb-4 text-sm mx-auto">
+                                        Bạn không có tài khoản?
+                                        <a href="#" class="text-primary text-gradient font-weight-bold">Liên hệ quản trị viên</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
+                            <div class="">
+                                <span class="">
+                                    <img src="~/assets/loginnews04/img/Logo-DH-Kinh-te-Ky-thuat-Cong-nghiep-UNETI.png" width="500" height="500" />
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!--   Core JS Files   -->
+    <script src="~/Content/assets/js/core/popper.min.js"></script>
+    <script src="~/Content/assets/js/core/bootstrap.min.js"></script>
+    <script src="~/Content/assets/js/plugins/perfect-scrollbar.min.js"></script>
+    <script src="~/Content/assets/js/plugins/smooth-scrollbar.min.js"></script>
+    <script>
+        let a;
+        function pass() {
+            if (a == 1) {
+                document.getElementById("password").type = 'password';
+                document.getElementById("pass-icon").className = 'fas fa-eye-slash pass-icon';
+                a = 0;
+            } else {
+                document.getElementById("password").type = 'text';
+                document.getElementById("pass-icon").className = 'fas fa-eye pass-icon';
+                a = 1;
+            }
+        }
+    </script>
+
+    <!-- Github buttons -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="~/Content/assets/js/argon-dashboard.min.js?v=2.0.4"></script>
+</body>
+
+</html>
+

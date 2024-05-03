@@ -1,0 +1,103 @@
+﻿@model QuanLySinhVienThucTap.Models.Score
+
+@{
+    ViewBag.Title = "Details";
+    double score1 = Convert.ToDouble(Model.Score1.GetValueOrDefault());
+    double score2 = Convert.ToDouble(Model.Score2.GetValueOrDefault());
+    double score3 = Convert.ToDouble(Model.Score3.GetValueOrDefault());
+    double score4 = Convert.ToDouble(Model.Score4.GetValueOrDefault());
+    double score5 = Convert.ToDouble(Model.Score5.GetValueOrDefault());
+
+    string CapitalizeFirstLetter(string input)
+    {
+        if (string.IsNullOrEmpty(input))
+        {
+            return input;
+        }
+
+        string[] words = input.Split(' ');
+        for (int i = 0; i < words.Length; i++)
+        {
+            if (!string.IsNullOrWhiteSpace(words[i]))
+            {
+                words[i] = char.ToUpper(words[i][0]) + words[i].Substring(1).ToLower();
+            }
+        }
+
+        return string.Join(" ", words);
+    }
+
+    // Tính trung bình
+    double scoretb = (score1 + score2 + score3 + score4 + score5) / 5;
+    string namesv = CapitalizeFirstLetter(Model.Topic.Student.LastName + " " + Model.Topic.Student.FirstName);
+}
+
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-frame mb-4">
+                <div class="card-header">
+                    <h5 class="card-title text-center">Thông tin điểm</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <label class="form-control-label">Mã Sinh viên:</label>
+                                @Html.DisplayFor(model => model.Topic.Student.StudentCode)
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Tên Sinh viên:</label>
+                                @namesv
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Lớp:</label>
+                                @Html.DisplayFor(model => model.Topic.Student.Classroom)
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Tên Đề tài:</label>
+                                @Html.DisplayFor(model => model.Topic.Title)
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Điểm trung bình:</label>
+                                @scoretb
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Đánh giá:</label>
+                                @Html.DisplayFor(model => model.Assessment)
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <label class="form-control-label">Điểm 1:</label>
+                                @Html.DisplayFor(model => model.Score1)
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Điểm 2:</label>
+                                @Html.DisplayFor(model => model.Score2)
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Điểm 3:</label>
+                                @Html.DisplayFor(model => model.Score3)
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Điểm 4:</label>
+                                @Html.DisplayFor(model => model.Score4)
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Điểm 5:</label>
+                                @Html.DisplayFor(model => model.Score5)
+                            </div>
+                            <a href="@Url.Action("Edit", "Scores", new { id = Model.TopicID })" class="btn btn-icon btn-3 btn-dark">
+                                <span class="btn-inner--icon"><i class="fas fa-pencil-alt"></i>&nbsp;&nbsp;Sửa</span>
+                            </a>
+                            <a href="@Url.Action("Index", "Scores")" class="btn btn-icon btn-3 btn-danger">
+                                <span class="btn-inner--icon"><i class="fas fa-times"></i>&nbsp;&nbsp;Trở về</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
